@@ -1,7 +1,42 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
+  $("#myForm").on('submit',function(event){
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+    event.preventDefault();
+    var url = $(this).attr("action")
+                  // var tweet = $("limitedtextarea").val()};
+                  var data =$(this).serialize();
+                  console.log(data);
+                  if ($("#tweet_area").val() ===  "")
+                  {
+                    alert("tweet field is empty");
+                    return
+                  }
+                  else
+                  {
+                    $('.waiting').show();
+                  }
+                  console.log(url)
+                  $.post(url, data,function(response){
+                    $('.waiting').hide();
+                    window.location.href=response
+                    // console.log("#job)id")
+                    
+
+
+                  });          
+                });
+
 });
+
+$("#myForm").on('submit',function(response)
+    var jobId = data
+    $.get('/status/' + JobId, function(response){
+        var message = response
+    $("#status").html(message);
+    clearInterval(myIntervalId);
+
+setInterval(recheck, 50000);
+  });
+
+});
+

@@ -20,19 +20,18 @@ get '/auth' do
 
 
 
-session[:oauth_token] = @access_token.token
-session[:oauth_secret] = @access_token.secret
+  session[:oauth_token] = @access_token.token
+  session[:oauth_secret] = @access_token.secret
   
- 
 
 
-  if User.find_by_oauth_token(@access_token.token)
+  if User.find_by_oauth_token(session[:oauth_token])
     redirect to ('/welcome')
     puts "here"
   else
     User.create(:username => @access_token.params[:screen_name], :oauth_token => @access_token.token, :oauth_secret => @access_token.secret )
     redirect to ('/welcome')
- end 
+  end 
 end
 
 
@@ -42,14 +41,16 @@ get '/welcome' do
   # TwitterOauthSetting.create(session[:oauth_token],session[:oauth_secret], user_id: @user.id)
 
 
-erb :main_page
+  erb :main_page
 end
 
 post '/welcome' do
-tweet = params[:tweet_area]
+    tweet = params[:tweet_area]
+      @user=User.find_by_oauth_token(session[:oauth_token])
+      job_id =@user.tweet_future(4.minutes,tweet)
+      if request.xhr?
+   "/status/#{job_id}"
+      end
+ end
 
-client.update(tweet)
 
-
-redirect to ('/welcome')
-end

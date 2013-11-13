@@ -1,3 +1,14 @@
 class User < ActiveRecord::Base
-  # Remember to create a migration!
-end
+   has_many :tweets
+
+  def tweet(status)
+    tweet = tweets.create!(:status => status)
+    TweetWorker.perform_async(tweet.id)
+  end
+
+  def tweet_future(timestamp,status)
+    tweet = tweets.create!(:status => status)
+    TweetWorker.perform_in(timestamp, tweet.id)
+  end
+end  
+

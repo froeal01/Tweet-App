@@ -13,12 +13,14 @@ gem 'activesupport'
 gem 'activerecord'
 
 gem 'rake'
-
+gem 'sidekiq-scheduler'
 gem 'shotgun'
 gem 'debugger'
 gem 'oauth'
 gem 'twitter'
-
+gem 'json'
+gem 'sidekiq'
+gem 'redis'
 group :test do
   gem 'faker'
   gem 'rspec'

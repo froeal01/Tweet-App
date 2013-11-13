@@ -10,16 +10,17 @@ require 'rubygems'
 
 require 'uri'
 require 'pathname'
-
+require'sidekiq-scheduler'
 require 'pg'
 require 'active_record'
 require 'logger'
 require 'debugger'
 require 'sinatra'
 require 'shotgun'
-
+require 'json'
 require 'erb'
-
+require 'sidekiq'
+require 'redis'
 require 'oauth'
 require 'twitter'
 
@@ -35,7 +36,14 @@ Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
 
+if Sinatra::Application.development?
+  twitter_data = YAML.load_file(APP_ROOT.join('config','keys.yaml'))
+  ENV['TWITTER_KEY'] = twitter_data['TWITTER_KEY']
+  ENV['TWITTER_SECRET'] = twitter_data['TWITTER_SECRET']
+end
+
+
 Twitter.configure do |config|
-  config.consumer_key = ENV['TWITTER_KEY']
+  config.consumer_key = ENV['TWITTER_KEY']  
   config.consumer_secret = ENV['TWITTER_SECRET']
 end
