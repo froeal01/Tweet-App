@@ -15,7 +15,7 @@ gem 'activerecord'
 gem 'rake'
 
 gem 'shotgun'
-
+gem 'debugger'
 gem 'oauth'
 gem 'twitter'
 

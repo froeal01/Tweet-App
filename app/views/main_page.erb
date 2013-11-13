@@ -1,0 +1,10 @@
+<h1> Welcome back <%= @user.username %> <h1>
+
+	<h3> tweet to the world <h3>
+<form action="/welcome" method="POST">
+	<textarea name="tweet_area"></textarea>
+	<input type="submit" value="Tweet"/>
+</form>
+ <p>
+  <button><a href="/sign_out">Sign Out</a></button>
+ </p>

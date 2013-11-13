@@ -14,7 +14,7 @@ require 'pathname'
 require 'pg'
 require 'active_record'
 require 'logger'
-
+require 'debugger'
 require 'sinatra'
 require 'shotgun'
 

@@ -20,3 +20,8 @@ def request_token
   end
   session[:request_token]
 end
+
+def client
+   @client = Twitter::Client.new(:oauth_token => session[:oauth_token], :oauth_token_secret => session[:oauth_secret] )
+end
+   
